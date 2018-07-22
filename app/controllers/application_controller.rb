@@ -10,6 +10,32 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  post '/signup' do
+    # @user = User.create(params)
+    @user = User.new(params)
+
+    if @user.save
+      # success, redirect to user show
+    else
+      # include an error message here
+      # re-render the sing up form 
+      # or, redirect back to sign up
+    end 
+  end
+
+  patch '/users/:id' do
+    @user = User.find_by(params[:id])
+
+    if @user.update(params)
+      # success, redirect to user show
+    else
+      # include an error message here
+      # re-render the sing up form 
+      # or, redirect back to edit form
+    end 
+  end
+  
+
   post '/login' do
     @user = User.find_by(username: params[:username])
     if !@user.nil? && @user.password == params[:password]
